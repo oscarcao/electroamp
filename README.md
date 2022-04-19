@@ -58,6 +58,12 @@ The repo is fairly small and compact. All source files resides within the `src` 
 
 You can download the latest prebuilt versions of this app from the releases tab.
 
+macOS users need to remove the extended attributes before app can run. To remove the extended attributes, run the following command in Terminal:
+
+```
+    xattr -cr path/to/electroamp.app
+```
+
 ## Disclaimer
 
 This project is not affiliated with [Winamp](http://www.winamp.com/) or its owners. All product names, logos, and other IP are the property of their respective owners.
