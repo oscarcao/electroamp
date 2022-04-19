@@ -1,0 +1,44 @@
+name: release
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - 'v*'
+
+jobs:
+  build_release:
+    strategy:
+      matrix:
+        os: [windows-latest, macOS-latest, ubuntu-latest]
+    
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+      
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      
+      - name: install dependencies
+        run: yarn 
+      
+      - name: build for x64
+        run: yarn make --arch=x64 
+      
+      - name: build for arm64
+        run: yarn make --arch=arm64
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            out/make/**/*.nupkg
+            out/make/**/*.exe
+            out/make/**/*.rpm
+            out/make/**/*.deb
+            out/make/**/*.zip
